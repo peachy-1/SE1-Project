@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using SE1_Project.Models;
 
 namespace SE1_Project
 {
@@ -32,6 +34,9 @@ namespace SE1_Project
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddDbContext<SE1_ProjectContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("SE1_ProjectContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,9 +56,12 @@ namespace SE1_Project
 
             app.UseMvc(routes =>
             {
+                /*routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");*/
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Professionals}/{action=Index}/{id?}");
             });
         }
     }
