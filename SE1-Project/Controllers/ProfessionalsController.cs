@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SE1_Project.Models;
+using SE1_Project.Models.ViewModels;
 
 namespace SE1_Project.Controllers
 {
@@ -19,9 +20,33 @@ namespace SE1_Project.Controllers
         }
 
         // GET: Professionals
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string professionalprofession, string searchString)
         {
-            return View(await _context.Professional.ToListAsync());
+            IQueryable<string> professionQuery = from p in _context.Professional
+                                                 orderby p.profession
+                                                 select p.profession;
+
+            var professionals = from p in _context.Professional
+                                select p;
+
+            /*if (!String.IsNullOrEmpty(searchString))
+            {
+                professionals = professionals.Where(s => s.fName.Contains(searchString) || s.lName.Contains(searchString));
+            }*/
+
+            if (!string.IsNullOrEmpty(professionalprofession))
+            {
+                professionals = professionals.Where(x => x.profession == professionalprofession);
+            }
+
+            var professionalProfessionVM = new ProfessionalProfessionViewModel
+            {
+                professions = new SelectList(await professionQuery.Distinct().ToListAsync()),
+                Professionals = await professionals.ToListAsync()
+            };
+            return View(professionalProfessionVM);
+            //return View(await professionals.ToListAsync());
+            //return View(await _context.Professional.ToListAsync());
         }
 
         // GET: Professionals/Details/5

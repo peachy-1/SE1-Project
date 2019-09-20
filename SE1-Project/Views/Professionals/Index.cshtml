@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SE1_Project.Models.Professional>
+﻿@model SE1_Project.Models.ViewModels.ProfessionalProfessionViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -9,50 +9,61 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-controller="Professionals" asp-action="Index" method="get">
+    <p>
+        Name: <input type="text" asp-for="searchString" />
+        Profession: <select asp-for="professionalProfession" asp-items="Model.professions">
+            <option value="">All</option>
+        </select>
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.fName)
+                @Html.DisplayNameFor(model => model.Professionals[0].fName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.lName)
+                @Html.DisplayNameFor(model => model.Professionals[0].lName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.streetAddress)
+                @Html.DisplayNameFor(model => model.Professionals[0].streetAddress)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.city)
+                @Html.DisplayNameFor(model => model.Professionals[0].city)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.state)
+                @Html.DisplayNameFor(model => model.Professionals[0].state)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.phoneNumber)
+                @Html.DisplayNameFor(model => model.Professionals[0].phoneNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.email)
+                @Html.DisplayNameFor(model => model.Professionals[0].email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.profession)
+                @Html.DisplayNameFor(model => model.Professionals[0].profession)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.rate)
+                @Html.DisplayNameFor(model => model.Professionals[0].rate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.averageRating)
+                @Html.DisplayNameFor(model => model.Professionals[0].averageRating)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.company)
+                @Html.DisplayNameFor(model => model.Professionals[0].company)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.image)
+                @Html.DisplayNameFor(model => model.Professionals[0].image)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Professionals) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.fName)
