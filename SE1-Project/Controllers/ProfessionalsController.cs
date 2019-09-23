@@ -29,10 +29,10 @@ namespace SE1_Project.Controllers
             var professionals = from p in _context.Professional
                                 select p;
 
-            /*if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(searchString))
             {
                 professionals = professionals.Where(s => s.fName.Contains(searchString) || s.lName.Contains(searchString));
-            }*/
+            }
 
             if (!string.IsNullOrEmpty(professionalprofession))
             {
