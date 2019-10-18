@@ -12,8 +12,17 @@
 
 <form asp-controller="Professionals" asp-action="Index" method="get">
     <p>
-        Name: <input type="text" asp-for="searchString" />
-        Profession: <select asp-for="professionalProfession" asp-items="Model.professions">
+        Name: <input type="text" asp-for="NameString" />
+        City: <input type="text" asp-for="CityString" />
+        State: <input type="text" size="2" maxlength="2" asp-for="StateString" />
+        Rating: <select asp-for="Rating" >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        Profession: <select asp-for="ProfessionalProfession" asp-items="Model.Professions">
             <option value="">All</option>
         </select>
         <input type="submit" value="Filter" />
