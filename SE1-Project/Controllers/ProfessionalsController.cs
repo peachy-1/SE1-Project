@@ -20,7 +20,7 @@ namespace SE1_Project.Controllers
         }
 
         // GET: Professionals
-        public async Task<IActionResult> Index(string professionalprofession, string searchString)
+        public async Task<IActionResult> Index(string professionalprofession, string nameString, string cityString, string stateString, decimal rating = 0)
         {
             IQueryable<string> professionQuery = from p in _context.Professional
                                                  orderby p.profession
@@ -29,20 +29,34 @@ namespace SE1_Project.Controllers
             var professionals = from p in _context.Professional
                                 select p;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(nameString))
             {
-                professionals = professionals.Where(s => s.fName.Contains(searchString) || s.lName.Contains(searchString) 
-                || (searchString.Contains(s.fName) && searchString.Contains(s.lName)));
+                professionals = professionals.Where(s => s.fName.Contains(nameString) || s.lName.Contains(nameString) 
+                || (nameString.Contains(s.fName) && nameString.Contains(s.lName)));
             }
+
+            if (!String.IsNullOrEmpty(cityString))
+            {
+                professionals = professionals.Where(s => s.city.Contains(cityString));
+            }
+
+            if (!String.IsNullOrEmpty(stateString))
+            {
+                professionals = professionals.Where(s => s.state.Contains(stateString));
+            }
+
+            professionals = professionals.Where(r => r.averageRating >= rating);
 
             if (!string.IsNullOrEmpty(professionalprofession))
             {
                 professionals = professionals.Where(x => x.profession == professionalprofession);
             }
 
+            
+
             var professionalProfessionVM = new ProfessionalProfessionViewModel
             {
-                professions = new SelectList(await professionQuery.Distinct().ToListAsync()),
+                Professions = new SelectList(await professionQuery.Distinct().ToListAsync()),
                 Professionals = await professionals.ToListAsync()
             };
             return View(professionalProfessionVM);
