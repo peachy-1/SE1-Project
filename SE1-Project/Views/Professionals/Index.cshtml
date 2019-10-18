@@ -12,8 +12,17 @@
 
 <form asp-controller="Professionals" asp-action="Index" method="get">
     <p>
-        Name: <input type="text" asp-for="searchString" />
-        Profession: <select asp-for="professionalProfession" asp-items="Model.professions">
+        Name: <input type="text" asp-for="NameString" />
+        City: <input type="text" asp-for="CityString" />
+        State: <input type="text" size="2" maxlength="2" asp-for="StateString" />
+        Rating: <select asp-for="Rating" >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        Profession: <select asp-for="ProfessionalProfession" asp-items="Model.Professions">
             <option value="">All</option>
         </select>
         <input type="submit" value="Filter" />
@@ -23,12 +32,17 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Professionals[0].fName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].lName)
+            </th>*@
+
+            <th>
+                Name
             </th>
+   
             @*
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].streetAddress)
@@ -73,42 +87,54 @@
     <tbody>
 @foreach (var item in Model.Professionals) {
         <tr>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.fName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.lName)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.fName)
+                @Html.DisplayFor(modelItem => item.lName)
             </td>
+            @*
             <td>
                 @Html.DisplayFor(modelItem => item.streetAddress)
             </td>
+            *@
             <td>
                 @Html.DisplayFor(modelItem => item.city)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.state)
             </td>
+            @*
             <td>
                 @Html.DisplayFor(modelItem => item.phoneNumber)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.email)
             </td>
+            *@
             <td>
                 @Html.DisplayFor(modelItem => item.profession)
             </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.rate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.averageRating)
             </td>
+            @*
             <td>
                 @Html.DisplayFor(modelItem => item.company)
             </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.image)
             </td>
+            *@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
