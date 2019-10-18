@@ -23,12 +23,15 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Professionals[0].fName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].lName)
-            </th>
+            </th>*@
+            <p>
+                Name
+            </p>
             @*
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].streetAddress)
@@ -73,10 +76,14 @@
     <tbody>
 @foreach (var item in Model.Professionals) {
         <tr>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.fName)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.lName)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.fName)
                 @Html.DisplayFor(modelItem => item.lName)
             </td>
             @*
