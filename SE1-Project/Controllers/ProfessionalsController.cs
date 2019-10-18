@@ -31,7 +31,8 @@ namespace SE1_Project.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                professionals = professionals.Where(s => s.fName.Contains(searchString) || s.lName.Contains(searchString));
+                professionals = professionals.Where(s => s.fName.Contains(searchString) || s.lName.Contains(searchString) 
+                || (searchString.Contains(s.fName) && searchString.Contains(s.lName)));
             }
 
             if (!string.IsNullOrEmpty(professionalprofession))
