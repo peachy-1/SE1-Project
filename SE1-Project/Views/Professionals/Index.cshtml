@@ -4,13 +4,40 @@
     ViewData["Title"] = "Index";
 }
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <h1>Index</h1>
 
-<p>
+<style>
+    p-create {
+        background-color: lightblue;
+        width: 10px;
+        border: 5px solid blue;
+        padding: 2px;
+        margin: 2px;
+    }
+</style>
+@*
+    <style>
+        td-custom {
+            background-color: lightblue;
+            width: 10px;
+            border: 5px solid blue;
+            padding: 2px;
+            margin: 2px;
+        }
+    </style>
+*@
+
+<p-create>
     <a asp-action="Create">Create New</a>
-</p>
+</p-create>
+
 
 <form asp-controller="Professionals" asp-action="Index" method="get">
+    <br />
     <p>
         Name: <input type="text" asp-for="searchString" />
         Profession: <select asp-for="professionalProfession" asp-items="Model.professions">
@@ -63,50 +90,52 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Professionals) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.fName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.lName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.streetAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.city)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.state)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.phoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.profession)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.rate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.averageRating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.company)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.image)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Professionals)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.streetAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.city)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.state)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.phoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.profession)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.rate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.averageRating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.company)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.image)
+                </td>
+                <td>
+
+                    <a asp-action="Edit" asp-route-id="@item.Id"><button class="btn"><i class="far fa-edit"></i></button></a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id"><button class="btn"><i class="fa fa-trash"></i></button></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
