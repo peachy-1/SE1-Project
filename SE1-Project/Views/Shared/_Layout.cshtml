@@ -17,22 +17,41 @@
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
+<body class="bg-dark">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">RateMyProfessional</a>
+                <a class="navbar-brand font-weight-bold" asp-area="" asp-controller="Home" asp-action="Index">RateMyProfessional</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <!-- Left Side Header Interacts-->
+                <div class="navbar=collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <!--<li>
+                            <a class="nav-link text=light" href="/Professionals">Search</a>
+                        </li> --> <!--Search button on nav bar not needed when search bar functional-->
+                        <li>
+                            <input class="bg-light border-0" type="text" placeholder="Search..." />         <!--TODO THIS DOESN'T GO ANYWHERE-->
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1 justify-content-end">
+                        <!--<li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li> --> <!--The original Home and Privacy Buttons-->
+
+                        <!-- Right Side Header Interacts-->
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/Identity/Account/Login">Log In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/Identity/Account/Register">Register</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -42,14 +61,18 @@
     </header>
     <div class="container">
         <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3 text-light"> <!-- fix the body background color here-->
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-light bg-dark">
         <div class="container">
-            &copy; 2019 - SE1_Project - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2019 - SE1_Project -
+            <a class="text-light" asp-area="" asp-controller="Home" asp-action="About">About</a> |
+            <a class="text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> |
+            <a class="text-light" asp-area="" asp-controller="Home" asp-action="Terms">Terms</a> |
+            <a class="text-light" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
         </div>
     </footer>
 
