@@ -4,43 +4,25 @@
     ViewData["Title"] = "Index";
 }
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Add icon library -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 <h1>Index</h1>
 
-<style>
-    p-create {
-        background-color: lightblue;
-        width: 10px;
-        border: 5px solid blue;
-        padding: 2px;
-        margin: 2px;
-    }
-</style>
-@*
-    <style>
-        td-custom {
-            background-color: lightblue;
-            width: 10px;
-            border: 5px solid blue;
-            padding: 2px;
-            margin: 2px;
-        }
-    </style>
-*@
-
-<p-create>
+<p>
     <a asp-action="Create">Create New</a>
-</p-create>
-
+</p>
 
 <form asp-controller="Professionals" asp-action="Index" method="get">
-    <br />
     <p>
-        Name: <input type="text" asp-for="searchString" />
-        Profession: <select asp-for="professionalProfession" asp-items="Model.professions">
+        Name: <input type="text" asp-for="NameString" />
+        City: <input type="text" asp-for="CityString" />
+        State: <input type="text" size="2" maxlength="2" asp-for="StateString" />
+        Rating: <select asp-for="Rating" >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        Profession: <select asp-for="ProfessionalProfession" asp-items="Model.Professions">
             <option value="">All</option>
         </select>
         <input type="submit" value="Filter" />
@@ -50,27 +32,37 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Professionals[0].fName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].lName)
+            </th>*@
+
+            <th>
+                Name
             </th>
+   
+            @*
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].streetAddress)
             </th>
+            *@
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].city)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].state)
             </th>
+            @*
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].phoneNumber)
             </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].email)
             </th>
+            *@
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].profession)
             </th>
@@ -80,62 +72,75 @@
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].averageRating)
             </th>
+            @*
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].company)
             </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].image)
             </th>
+            *@
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Professionals)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.fName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.lName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.streetAddress)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.city)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.state)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.phoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.profession)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.rate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.averageRating)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.company)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.image)
-                </td>
-                <td>
-
-                    <a asp-action="Edit" asp-route-id="@item.Id"><button class="btn"><i class="far fa-edit"></i></button></a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id"><button class="btn"><i class="fa fa-trash"></i></button></a>
-                </td>
-            </tr>
-        }
+@foreach (var item in Model.Professionals) {
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.fName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lName)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.fName)
+                @Html.DisplayFor(modelItem => item.lName)
+            </td>
+            @*
+            <td>
+                @Html.DisplayFor(modelItem => item.streetAddress)
+            </td>
+            *@
+            <td>
+                @Html.DisplayFor(modelItem => item.city)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.state)
+            </td>
+            @*
+            <td>
+                @Html.DisplayFor(modelItem => item.phoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            *@
+            <td>
+                @Html.DisplayFor(modelItem => item.profession)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.rate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.averageRating)
+            </td>
+            @*
+            <td>
+                @Html.DisplayFor(modelItem => item.company)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.image)
+            </td>
+            *@
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>
