@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using SE1_Project.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 
 namespace SE1_Project
 {
@@ -32,11 +34,15 @@ namespace SE1_Project
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //services.AddDefaultIdentity<IdentityUser>()
+                //.AddRoles<IdentityRole>();
+            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDbContext<SE1_ProjectContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("SE1_ProjectContext")));
+            //services.AddDefaultIdentity<IdentityRole>().AddDefaultUI(UIFramework.Bootstrap4).AddEntityFrameworkStores<SE1_ProjectContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
