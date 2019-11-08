@@ -10,59 +10,94 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-<form asp-controller="Professionals" asp-action="Index" method="get">
-    <p>
+<form asp-controller="Professionals" asp-action="Index" method="get" id="filter" style="display: inline; float: left; width: 30%; border: 1px solid white; padding-left: 5px">
+    <p style="padding-top: 10px">
         Name: <input type="text" asp-for="NameString" />
-        City: <input type="text" asp-for="CityString" />
-        State: <input type="text" size="2" maxlength="2" asp-for="StateString" />
-        Rating: <select asp-for="Rating" >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-        </select>
-        Profession: <select asp-for="ProfessionalProfession" asp-items="Model.Professions">
-            <option value="">All</option>
-        </select>
-        <input type="submit" value="Filter" />
+    <p></p>
+    City: <input type="text" asp-for="CityString" />
+    <p></p>
+    State: <select asp-for="StateString">
+        <option value="AL">AL</option>
+        <option value="AK">AK</option>
+        <option value="AR">AR</option>
+        <option value="AZ">AZ</option>
+        <option value="CA">CA</option>
+        <option value="CO">CO</option>
+        <option value="CT">CT</option>
+        <option value="DC">DC</option>
+        <option value="DE">DE</option>
+        <option value="FL">FL</option>
+        <option value="GA">GA</option>
+        <option value="HI">HI</option>
+        <option value="IA">IA</option>
+        <option value="ID">ID</option>
+        <option value="IL">IL</option>
+        <option value="IN">IN</option>
+        <option value="KS">KS</option>
+        <option value="KY">KY</option>
+        <option value="LA">LA</option>
+        <option value="MA">MA</option>
+        <option value="MD">MD</option>
+        <option value="ME">ME</option>
+        <option value="MI">MI</option>
+        <option value="MN">MN</option>
+        <option value="MO">MO</option>
+        <option value="MS">MS</option>
+        <option value="MT">MT</option>
+        <option value="NC">NC</option>
+        <option value="NE">NE</option>
+        <option value="NH">NH</option>
+        <option value="NJ">NJ</option>
+        <option value="NM">NM</option>
+        <option value="NV">NV</option>
+        <option value="NY">NY</option>
+        <option value="ND">ND</option>
+        <option value="OH">OH</option>
+        <option value="OK">OK</option>
+        <option value="OR">OR</option>
+        <option value="PA">PA</option>
+        <option value="RI">RI</option>
+        <option value="SC">SC</option>
+        <option value="SD">SD</option>
+        <option value="TN">TN</option>
+        <option value="TX">TX</option>
+        <option value="UT">UT</option>
+        <option value="VT">VT</option>
+        <option value="VA">VA</option>
+        <option value="WA">WA</option>
+        <option value="WI">WI</option>
+        <option value="WV">WV</option>
+        <option value="WY">WY</option>
+    </select>
+    <p></p>
+    Rating: <select asp-for="Rating">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+    <p></p>
+    Profession: <select asp-for="ProfessionalProfession" asp-items="Model.Professions">
+        <option value="">All</option>
+    </select>
+    <p></p>
+    <input type="submit" value="Filter" />
     </p>
 </form>
 
-<table class="table">
+<table class="table" style="display:inline; float: right; width: 65%; margin-left: 3px">
     <thead style="color:white;">
         <tr>
-            @*<th>
-                @Html.DisplayNameFor(model => model.Professionals[0].fName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Professionals[0].lName)
-            </th>*@
-
             <th>
                 Name
             </th>
-   
-            @*
-            <th>
-                @Html.DisplayNameFor(model => model.Professionals[0].streetAddress)
-            </th>
-            *@
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].city)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].state)
             </th>
-            @*
-            <th>
-                @Html.DisplayNameFor(model => model.Professionals[0].phoneNumber)
-            </th>
-            
-            <th>
-                @Html.DisplayNameFor(model => model.Professionals[0].email)
-            </th>
-            *@
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].profession)
             </th>
@@ -72,77 +107,40 @@
             <th>
                 @Html.DisplayNameFor(model => model.Professionals[0].averageRating)
             </th>
-            @*
-            <th>
-                @Html.DisplayNameFor(model => model.Professionals[0].company)
-            </th>
-            
-            <th>
-                @Html.DisplayNameFor(model => model.Professionals[0].image)
-            </th>
-            *@
             <th></th>
         </tr>
     </thead>
     <tbody style="color:white;">
-@foreach (var item in Model.Professionals) {
-        <tr>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.fName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.lName)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.fName)
-                @Html.DisplayFor(modelItem => item.lName)
-            </td>
-            @*
-            <td>
-                @Html.DisplayFor(modelItem => item.streetAddress)
-            </td>
-            *@
-            <td>
-                @Html.DisplayFor(modelItem => item.city)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.state)
-            </td>
-            @*
-            <td>
-                @Html.DisplayFor(modelItem => item.phoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.email)
-            </td>
-            *@
-            <td>
-                @Html.DisplayFor(modelItem => item.profession)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.rate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.averageRating)
-            </td>
-            @*
-            <td>
-                @Html.DisplayFor(modelItem => item.company)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.image)
-            </td>
-            *@
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbodystyle="background-color:powderblue;">
+        @foreach (var item in Model.Professionals)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fName)
+                    @Html.DisplayFor(modelItem => item.lName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.city)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.state)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.profession)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.rate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.averageRating)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+        </tbodystyle="background-color:powderblue;">
 </table>
 
 <p>Stuff</p>

@@ -18,6 +18,10 @@ html {
   }
 }
 
+form {
+    border: 1px solid black
+}
+
 .border-top {
   border-top: 1px solid #e5e5e5;
 }
