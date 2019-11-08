@@ -20,6 +20,7 @@ namespace SE1_Project.Areas.Identity
                         context.Configuration.GetConnectionString("SE1_Project_ContextConnection")));
 
                 services.AddDefaultIdentity<IdentityUser>()
+                    .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<SE1_Project_Context>();
             });
         }

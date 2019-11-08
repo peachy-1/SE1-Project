@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,12 @@ namespace SE1_Project.Controllers
     public class ProfessionalsController : Controller
     {
         private readonly SE1_ProjectContext _context;
+        private readonly SE1_Project_Context _dbcontext;
 
-        public ProfessionalsController(SE1_ProjectContext context)
+        public ProfessionalsController(SE1_ProjectContext context, SE1_Project_Context dbcontext)
         {
             _context = context;
+            _dbcontext = dbcontext;
         }
 
         // GET: Professionals
@@ -188,5 +191,12 @@ namespace SE1_Project.Controllers
         {
             return _context.Professional.Any(e => e.Id == id);
         }
+
+       /* public IActionResult ProfessionalsWithRoles()
+        {
+            List<Professional_Roles_ViewModel> modelLst = new List<Professional_Roles_ViewModel>();
+            var allUsers = _dbcontext.Users.ToList();
+            var users = allUsers.Where(x=>x.;
+        }*/
     }
 }
