@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using SE1_Project.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using SE1_Project.Areas.Identity.Data;
 
 namespace SE1_Project
 {
@@ -34,14 +35,16 @@ namespace SE1_Project
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //services.AddDefaultIdentity<IdentityUser>()
-                //.AddRoles<IdentityRole>();
-            
+            //services.AddDefaultIdentity<IdentityUser>();
+            //.AddRoles<IdentityRole>();
+            //services.AddIdentity<SE1_ProjectUser, IdentityRole>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddDbContext<SE1_ProjectContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("SE1_ProjectContext")));
+            //services.AddDbContext<SE1_PContext>(options =>
+              //      options.UseSqlServer(Configuration.GetConnectionString("SE1_PContextConnection")));
+
+            //services.AddIdentity<SE1_ProjectUser, IdentityRole>();
             //services.AddDefaultIdentity<IdentityRole>().AddDefaultUI(UIFramework.Bootstrap4).AddEntityFrameworkStores<SE1_ProjectContext>();
         }
 

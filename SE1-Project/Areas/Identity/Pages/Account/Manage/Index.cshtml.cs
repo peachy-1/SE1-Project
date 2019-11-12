@@ -8,18 +8,19 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SE1_Project.Areas.Identity.Data;
 
 namespace SE1_Project.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<SE1_ProjectUser> _userManager;
+        private readonly SignInManager<SE1_ProjectUser> _signInManager;
         private readonly IEmailSender _emailSender;
 
         public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<SE1_ProjectUser> userManager,
+            SignInManager<SE1_ProjectUser> signInManager,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -39,6 +40,36 @@ namespace SE1_Project.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+            [DataType(DataType.Text)]
+            [Display(Name = "Address")]
+            public string Address { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "City")]
+            public string City { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "State")]
+            public string State { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Profession")]
+            public string Profession { get; set; }
+            [DataType(DataType.Text)]
+            [Display(Name = "Company")]
+            public string Company { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Rate")]
+            public string Rate { get; set; }
             [Required]
             [EmailAddress]
             public string Email { get; set; }
@@ -64,6 +95,14 @@ namespace SE1_Project.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Address = user.Address,
+                City = user.City,
+                State = user.State,
+                Profession = user.Profession,
+                Rate = user.Rate,
+                Company = user.Company,
                 Email = email,
                 PhoneNumber = phoneNumber
             };
@@ -97,6 +136,46 @@ namespace SE1_Project.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            if(Input.FirstName != user.FirstName)
+            {
+                user.FirstName = Input.FirstName;
+            }
+            
+            if(Input.LastName != user.LastName)
+            {
+                user.LastName = Input.LastName;
+            }
+
+            if(Input.Address != user.Address)
+            {
+                user.Address = Input.Address;
+            }
+
+            if(Input.City != user.City)
+            {
+                user.City = Input.City;
+            }
+
+            if(Input.State != user.State)
+            {
+                user.State = Input.State;
+            }
+
+            if(Input.Profession != user.Profession)
+            {
+                user.Profession = Input.Profession;
+            }
+
+            if(Input.Rate != user.Rate)
+            {
+                user.Rate = Input.Rate;
+            }
+
+            if(Input.Company != user.Company)
+            {
+                user.Company = Input.Company;
+            }
+
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {
@@ -107,6 +186,8 @@ namespace SE1_Project.Areas.Identity.Pages.Account.Manage
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
+
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
