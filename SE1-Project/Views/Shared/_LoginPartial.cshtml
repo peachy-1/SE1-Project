@@ -1,6 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@using SE1_Project.Areas.Identity.Data
+@*@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager*@
+@inject SignInManager<SE1_ProjectUser> SignInManager
+@inject UserManager<SE1_ProjectUser> UserManager
 
 
 

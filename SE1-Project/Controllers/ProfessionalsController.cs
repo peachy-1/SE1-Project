@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SE1_Project.Migrations.SE1_Project_;
 using SE1_Project.Models;
 using SE1_Project.Models.ViewModels;
 
@@ -15,6 +16,7 @@ namespace SE1_Project.Controllers
     {
         private readonly SE1_ProjectContext _context;
         private readonly SE1_Project_Context _dbcontext;
+        //private ApplicationDbContext
 
         public ProfessionalsController(SE1_ProjectContext context, SE1_Project_Context dbcontext)
         {
@@ -192,11 +194,16 @@ namespace SE1_Project.Controllers
             return _context.Professional.Any(e => e.Id == id);
         }
 
-       /* public IActionResult ProfessionalsWithRoles()
+       /*public IQueryable ProfessionalsWithRoles(DbContext db)
         {
-            List<Professional_Roles_ViewModel> modelLst = new List<Professional_Roles_ViewModel>();
-            var allUsers = _dbcontext.Users.ToList();
-            var users = allUsers.Where(x=>x.;
+            //var c = _dbcontext.Users.Where(u => u.Rol)
+            var usersWithRoles = (from user in _dbcontext.Users
+                                  select new
+                                  {
+                                      UserId = user.Id,
+                                      Username = user.UserName,
+                                      Email = user.Email,
+                                  });
         }*/
     }
 }

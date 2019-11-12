@@ -9,22 +9,21 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using SE1_Project.Areas.Identity.Data;
 
 namespace SE1_Project.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
-        
-        //private readonly RoleManager<IdentityUser> _roleManager;
+        private readonly SignInManager<SE1_ProjectUser> _signInManager;
+        private readonly UserManager<SE1_ProjectUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<SE1_ProjectUser> userManager,
+            SignInManager<SE1_ProjectUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -42,6 +41,36 @@ namespace SE1_Project.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+            [DataType(DataType.Text)]
+            [Display(Name = "Address")]
+            public string Address { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "City")]
+            public string City { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "State")]
+            public string State { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Profession")]
+            public string Profession { get; set; }
+            [DataType(DataType.Text)]
+            [Display(Name = "Company")]
+            public string Company { get; set; }
+            [Required]
+            [DataType(DataType.Currency)]
+            [Display(Name = "Rate")]
+            public string Rate { get; set; }
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -56,7 +85,6 @@ namespace SE1_Project.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-
             [Required]
             [Display(Name = "Choose role")]
             public string Role { get; set; }
@@ -70,13 +98,19 @@ namespace SE1_Project.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-           
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser
-                {
+                var user = new SE1_ProjectUser {
                     UserName = Input.Email,
                     Email = Input.Email,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    Address = Input.Address,
+                    City = Input.City,
+                    State = Input.State,
+                    Profession = Input.Profession,
+                    Rate = Input.Rate,
+                    Company = Input.Company
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
