@@ -41,8 +41,8 @@ namespace SE1_Project
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            //services.AddDbContext<SE1_PContext>(options =>
-              //      options.UseSqlServer(Configuration.GetConnectionString("SE1_PContextConnection")));
+            services.AddDbContext<SE1_ProjectContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("SE1_ProjectContext")));
 
             //services.AddIdentity<SE1_ProjectUser, IdentityRole>();
             //services.AddDefaultIdentity<IdentityRole>().AddDefaultUI(UIFramework.Bootstrap4).AddEntityFrameworkStores<SE1_ProjectContext>();

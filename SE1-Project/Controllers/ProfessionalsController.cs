@@ -15,13 +15,13 @@ namespace SE1_Project.Controllers
     public class ProfessionalsController : Controller
     {
         private readonly SE1_ProjectContext _context;
-        private readonly SE1_Project_Context _dbcontext;
+        //private readonly SE1_Project_Context _dbcontext;
         //private ApplicationDbContext
 
-        public ProfessionalsController(SE1_ProjectContext context, SE1_Project_Context dbcontext)
+        public ProfessionalsController(SE1_ProjectContext context)
         {
             _context = context;
-            _dbcontext = dbcontext;
+            
         }
 
         // GET: Professionals
