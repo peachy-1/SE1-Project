@@ -15,13 +15,14 @@ namespace SE1_Project.Controllers
     public class ProfessionalsController : Controller
     {
         private readonly SE1_ProjectContext _context;
+        private readonly SE1_PContext _dbcontext;
         //private readonly SE1_Project_Context _dbcontext;
         //private ApplicationDbContext
 
-        public ProfessionalsController(SE1_ProjectContext context)
+        public ProfessionalsController(SE1_ProjectContext context, SE1_PContext dbcontext)
         {
             _context = context;
-            
+            _dbcontext = dbcontext;
         }
 
         // GET: Professionals
@@ -33,6 +34,7 @@ namespace SE1_Project.Controllers
 
             var professionals = from p in _context.Professional
                                 select p;
+            
 
             if (!String.IsNullOrEmpty(nameString))
             {
@@ -204,6 +206,39 @@ namespace SE1_Project.Controllers
                                       Username = user.UserName,
                                       Email = user.Email,
                                   });
+        }*/
+
+        public ActionResult Professional_Roles()
+        {
+            var professionals = (from user in _dbcontext.Users
+                                 join r in _dbcontext.UserRoles on user.Id equals r.UserId
+                                 where r.RoleId == "3"                                 
+                                 select new
+                                 {
+                                     UserId = user.Id,
+                                     Username = user.UserName,
+                                     FirstName = user.FirstName,
+                                     LastName = user.LastName,
+                                     City = user.City,
+                                     State = user.State,
+                                     Profession = user.Profession
+
+                                 }).ToList().Select(p => new Professional_Roles_ViewModel()
+                                 {
+                                     UserId = p.UserId,
+                                     Username = p.Username,
+                                     FirstName = p.FirstName,
+                                     LastName = p.LastName,
+                                     City = p.City,
+                                     State = p.State,
+                                     Profession = p.Profession
+                                 });
+            return View(professionals);
+        }
+
+        /*public ActionResult getSpecificUserDetails(string email)
+        {
+            var specificProfessional = (from user in )
         }*/
     }
 }
