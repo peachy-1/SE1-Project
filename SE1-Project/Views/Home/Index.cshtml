@@ -2,68 +2,53 @@
     ViewData["Title"] = "Index";
 }
 
-<!--<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>-->
-<h1>Welcome to Rate My Professional</h1>
+<div class="text-center">
+    <h1 class="display-4">Welcome to Rate My Professional</h1>
+</div>
 
 
-<!--Trying to make a Carousel of Pictures-->
-
-@*<div class="item">
-        <img src="https://www.pexels.com/photo/person-holding-pencil-1388944.jpeg" alt="Chicago">
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="d-block w-100" src="https://images.pexels.com/photos/1388944/floor-flooring-hand-man-1388944.jpeg?cs=srgb&dl=carpenter-carpentry-craft-1388944.jpg&fm=jpg" alt="First slide" height="350">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="https://images.pexels.com/photos/1249611/pexels-photo-1249611.jpeg?cs=srgb&dl=person-using-dewalt-cordless-impact-driver-on-brown-board-1249611.jpg&fm=jpg" alt="Second slide" height="350">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="https://images.pexels.com/photos/374079/pexels-photo-374079.jpeg?cs=srgb&dl=adult-apron-blur-374079.jpg&fm=jpg" alt="Third slide" height="350">
+        </div>
     </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
 
 
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>
+    <h4>Connecting customers to qualified, reputable professionals since 2019!</h4>
+    <h5>Looking to hire a professional? <a href="/Professionals">Start searching the database!</a></h5>
+    <p>
+        Rate My Professional can help you find a professional in your area that you know you can trust!
+        Whether you need a babysitter, a plumber, or someone to mow your lawn, you can search our database
+        to find the right person for the job. Stop overpaying for sketchy professionals!
+    </p>
 
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner">
-            <div class="item active">
-                <img src="floor-flooring-hand-man-1388944.jpeg" alt="Los Angeles">
-            </div>
-
-            <div class="item">
-                <img src="pexels-photo-1249611.jpeg" alt="Chicago">
-            </div>
-
-            @*<div class="item">
-                    <img src="ny.jpg" alt="New York">
-                </div>
-    </div>
-
-<!-- Left and right controls -->
-<a class="left carousel-control" href="#myCarousel" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left"></span>
-    <span class="sr-only">Previous</span>
-</a>
-<a class="right carousel-control" href="#myCarousel" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right"></span>
-    <span class="sr-only">Next</span>
-</a>
-</div>*@
-
-<h4>Connecting customers to qualified, reputable professionals since 2019!</h4>
-<h5>Looking to hire a professional? <a href="/Professionals">Start searching the database!</a></h5>
-<p>
-    Rate My Professional can help you find a professional in your area that you know you can trust!
-    Whether you need a babysitter, a plumber, or someone to mow your lawn, you can search our database
-    to find the right person for the job. Stop overpaying for sketchy professionals!
-</p>
-
-<h5>
-    Are you a professional looking to advertise your services?
-    <a href="/Identity/Account/Register">Create an account!</a>
-</h5>
-<p>
-    If you're looking to expand your business, Rate My Professional can help get your name out there
-    to thousands of potential new customers. Build your reputation and start earning more money
-    today by signing up to join our database!
-</p>
+    <h5>
+        Are you a professional looking to advertise your services?
+        <a href="/Identity/Account/Register">Create an account!</a>
+    </h5>
+    <p>
+        If you're looking to expand your business, Rate My Professional can help get your name out there
+        to thousands of potential new customers. Build your reputation and start earning more money
+        today by signing up to join our database!
+    </p>
