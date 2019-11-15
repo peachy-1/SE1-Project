@@ -28,24 +28,19 @@
                 </button>
                 <!-- Left Side Header Interacts-->
                 @*<div class="navbar=collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li>
-                            <input class="bg-light border-0" type="text" placeholder="Search..." />       
-                        </li>
-                    </ul>
-                </div>*@
+            <ul class="navbar-nav flex-grow-1">
+                <li>
+                    <input class="bg-light border-0" type="text" placeholder="Search..." />
+                </li>
+            </ul>
+        </div>*@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1 justify-content-end">
 
-                        <li class="nav-item">
-                            <a class="nav-link text-light" href="/Identity/Account/Login">Log In</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" href="/Identity/Account/Register">Register</a>
-                        </li>
+                        <partial name="_LoginPartial" />
                     </ul>
-                    <partial name="_LoginPartial" />
-                </div>
+                
+            </div>
             </div>
         </nav>
     </header>
