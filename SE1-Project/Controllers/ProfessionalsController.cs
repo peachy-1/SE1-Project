@@ -208,6 +208,7 @@ namespace SE1_Project.Controllers
                                   });
         }*/
 
+        [HttpGet]
         public ActionResult Professional_Roles()
         {
             var professionals = (from user in _dbcontext.Users
@@ -221,7 +222,8 @@ namespace SE1_Project.Controllers
                                      LastName = user.LastName,
                                      City = user.City,
                                      State = user.State,
-                                     Profession = user.Profession
+                                     Profession = user.Profession,
+                                     Email = user.Email
 
                                  }).ToList().Select(p => new Professional_Roles_ViewModel()
                                  {
@@ -231,14 +233,57 @@ namespace SE1_Project.Controllers
                                      LastName = p.LastName,
                                      City = p.City,
                                      State = p.State,
-                                     Profession = p.Profession
+                                     Profession = p.Profession,
+                                     Email = p.Email
                                  });
             return View(professionals);
         }
 
-        /*public ActionResult getSpecificUserDetails(string email)
+        public ActionResult getSpecificUserDetails(string id)
         {
-            var specificProfessional = (from user in )
-        }*/
+            var pro = _dbcontext.Users.Where(p => p.Id == id).FirstOrDefault();
+            if(pro == null)
+            {
+                return new NotFoundResult();
+            }
+            Professional_Details_ViewModel vm = new Professional_Details_ViewModel()
+            {
+                Email = pro.Email,
+                FirstName = pro.FirstName,
+                LastName = pro.LastName,
+                Address = pro.Address,
+                City = pro.City,
+                State = pro.State,
+                Profession = pro.Profession,
+                Rate = pro.Rate,
+                Company = pro.Company
+            };
+            /*var specificProfessional = (from user in _dbcontext.Users
+                                        where user.Id == id
+                                        select new
+                                        {
+                                            Email = user.Email,
+                                            FirstName = user.FirstName,
+                                            LastName = user.LastName,
+                                            Address = user.Address,
+                                            City = user.City,
+                                            State = user.State,
+                                            Profession = user.Profession,
+                                            Rate = user.Rate,
+                                            Company = user.Company
+                                        }).ToList().Select(p => new Professional_Details_ViewModel()
+                                        {
+                                            Email = p.Email,
+                                            FirstName = p.FirstName,
+                                            LastName = p.LastName,
+                                            Address = p.Address,
+                                            City = p.City,
+                                            State = p.State,
+                                            Profession = p.Profession,
+                                            Rate = p.Rate,
+                                            Company = p.Company
+                                        });*/
+            return View(vm);
+        }
     }
 }
