@@ -16,5 +16,7 @@ namespace SE1_Project.Models.ViewModels
         public string Profession { get; set; }
         public string Rate { get; set; }
         public string Company { get; set; }
+        public decimal Rating { get; set; }
+        public List<Review> Reviews { get; set; }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SE1_Project.Models;
 
 namespace SE1_Project.Migrations.SE1_P
 {
     [DbContext(typeof(SE1_PContext))]
-    partial class SE1_PContextModelSnapshot : ModelSnapshot
+    [Migration("20191120224549_SE1_P2Context")]
+    partial class SE1_P2Context
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
