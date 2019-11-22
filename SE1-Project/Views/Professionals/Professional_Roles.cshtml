@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Professional_Roles</h1>
+<h1>List of Professionals</h1>
 
 <table class="table table-hover table-bordered" id="ListOfProfessionals">
     <thead style="color:white;">
@@ -13,6 +13,9 @@
             <td><b>City</b></td>
             <td><b>State</b></td>
             <td><b>Profession</b></td>
+            <td><b>Email</b></td>
+            <td><b>Rating</b></td>
+            <td></td>
         </tr>
     </thead>
     @foreach(var user in Model)
@@ -22,6 +25,11 @@
             <td>@user.City</td>
             <td>@user.State</td>
             <td>@user.Profession</td>
+            <td>@user.Email</td>
+            <td>@user.Rating</td>
+            <td>
+                <a asp-action="getSpecificUserDetails" asp-controller="Professionals" asp-route-id="@user.Email" asp-route-uid="@user.UserId">Details</a>
+            </td>
         </tr>
     }
 </table>

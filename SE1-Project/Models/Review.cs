@@ -10,15 +10,12 @@ namespace SE1_Project.Models
     {
         public int ID { get; set; }
 
-        [DataType(DataType.Date)]
+
         public DateTime InteractionDate { get; set; }
         public int rating { get; set; }
         public string reviewText { get; set; }
 
-        [Required]
-        public virtual Professional Professional { get; set; }
-
-        [Required]
-        public virtual Customer Customer { get; set; }
+        public string reviewerName { get; set; }
+        public string professionalId { get; set; }
     }
 }

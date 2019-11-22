@@ -1,0 +1,70 @@
+﻿@using SE1_Project.Models.ViewModels
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model Professional_Details_ViewModel;
+@{
+    string name = Model.FirstName + " " + Model.LastName;
+    ViewData["Title"] = name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Professional Information</h1>
+
+
+<h4>@Html.DisplayNameFor(i => i.Email)</h4>
+<p>@Html.DisplayFor(i => i.Email)</p>
+
+<h4>Name</h4>
+<p>@Html.DisplayFor(i => i.FirstName) @Html.DisplayFor(i => i.LastName)</p>
+
+
+@*@Html.TextBoxFor(m => m.FirstName, new { @readonly = "readonly" })*@
+
+<h4>@Html.DisplayNameFor(i => i.Address)</h4>
+<p>@Html.DisplayFor(i => i.Address)</p>
+
+<h4>@Html.DisplayNameFor(i => i.City)</h4>
+<p>@Html.DisplayFor(i => i.City)</p>
+
+<h4>@Html.DisplayNameFor(i => i.State)</h4>
+<p>@Html.DisplayFor(i => i.State)</p>
+
+<h4>@Html.DisplayNameFor(i => i.Profession)</h4>
+<p>@Html.DisplayFor(i => i.Profession)</p>
+
+<h4>@Html.DisplayNameFor(i => i.Rate)</h4>
+<p>@Html.DisplayFor(i => i.Rate)</p>
+
+<h4>@Html.DisplayNameFor(i => i.Company)</h4>
+<p>@Html.DisplayFor(i => i.Company)</p>
+
+<h4>Average Rating</h4>
+<p>@Html.DisplayFor(i => i.Rating)</p>
+
+<hr style="border-color:white;">
+<hr style="border-color:white;">
+<h4>Reviews for @Html.DisplayFor(i => i.FirstName) @Html.DisplayFor(i => i.LastName)</h4>
+
+@{
+    Review newReview = new Review();
+}
+@*Put submission of reviews here, above current reviews*@
+@if (ViewContext.HttpContext.User.IsInRole("Customer"))
+{
+    <input name="reviewerName" id="reviewerName" type="text" /><br />
+<textarea name="reviewText" id="reviewText"></textarea><br />
+    <input name="rating" id="rating" type="number" min="1" max="5" /><br />
+    <a asp-action="addReview" asp-controller="Professionals" asp-route-reviewer="reviewerName" asp-route-review="reviewText" asp-route-rating="rating" asp-route-email="@Model.Email">Add Review</a>
+}
+
+@{ int iter = 0;}
+@foreach (var review in Model.Reviews)
+{
+    <p>@review.reviewerName</p>
+    <p>@review.reviewText</p>
+    <p>@review.rating</p>
+    <hr style="border-color:white;">
+    iter++;
+}
+
+    Total Reviews: @iter

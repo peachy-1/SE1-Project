@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SE1_Project.Migrations.SE1_P;
 using SE1_Project.Migrations.SE1_Project_;
 using SE1_Project.Models;
 using SE1_Project.Models.ViewModels;
@@ -196,21 +198,122 @@ namespace SE1_Project.Controllers
             return _context.Professional.Any(e => e.Id == id);
         }
 
-       /*public IQueryable ProfessionalsWithRoles(DbContext db)
-        {
-            //var c = _dbcontext.Users.Where(u => u.Rol)
-            var usersWithRoles = (from user in _dbcontext.Users
-                                  select new
-                                  {
-                                      UserId = user.Id,
-                                      Username = user.UserName,
-                                      Email = user.Email,
-                                  });
-        }*/
-
+        [HttpGet]
         public ActionResult Professional_Roles()
         {
-            var professionals = (from user in _dbcontext.Users
+            var prof = (from user in _dbcontext.Users
+                        join r in _dbcontext.UserRoles on user.Id equals r.UserId
+                        where r.RoleId == "3"
+                        select new
+                        {
+                            UserId = user.Id,
+                            Username = user.UserName,
+                            FirstName = user.FirstName,
+                            LastName = user.LastName,
+                            City = user.City,
+                            State = user.State,
+                            Profession = user.Profession,
+                            Email = user.Email
+                        }).ToList();
+
+            List<Professional_Roles_ViewModel> viewModel = new List<Professional_Roles_ViewModel>();
+            string oneStarQuery, twoStarQuery, threeStarQuery, fourStarQuery, fiveStarQuery, totalReviewsQuery;
+            int oneStarReviews, twoStarReviews, threeStarReviews, fourStarReviews, fiveStarReviews, totalReviews;
+            decimal averageRating;
+            SqlConnection connection;
+            SqlParameter param = new SqlParameter();
+            SqlCommand command;
+            foreach(var user in prof)
+            {
+                oneStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 1 AND professionalEmail=@id";
+
+                twoStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 2 AND professionalEmail=@id";
+
+                threeStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 3 AND professionalEmail=@id";
+
+                fourStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 4 AND professionalEmail=@id";
+
+                fiveStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 5 AND professionalEmail=@id";
+
+                totalReviewsQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE professionalEmail=@id";
+
+                using (connection = new SqlConnection("Server=tcp:se1-ratemyprofessional.database.windows.net,1433;Initial Catalog=Identity;Persist Security Info=False;User ID=rmpadmin;Password=TeamOne1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+                {
+                    param.ParameterName = "@id";
+                    param.Value = user.UserId;
+                    using (command = new SqlCommand(oneStarQuery, connection))
+                    {
+                        command.Parameters.Add(param);
+                        connection.Open();
+                        oneStarReviews = (int)command.ExecuteScalar();
+                        connection.Close();
+                        command.Parameters.Clear();
+                    }
+                    using (command = new SqlCommand(twoStarQuery, connection))
+                    {
+                        command.Parameters.Add(param);
+                        connection.Open();
+                        twoStarReviews = (int)command.ExecuteScalar();
+                        connection.Close();
+                        command.Parameters.Clear();
+                    }
+                    using (command = new SqlCommand(threeStarQuery, connection))
+                    {
+                        command.Parameters.Add(param);
+                        connection.Open();
+                        threeStarReviews = (int)command.ExecuteScalar();
+                        connection.Close();
+                        command.Parameters.Clear();
+                    }
+                    using (command = new SqlCommand(fourStarQuery, connection))
+                    {
+                        command.Parameters.Add(param);
+                        connection.Open();
+                        fourStarReviews = (int)command.ExecuteScalar();
+                        connection.Close();
+                        command.Parameters.Clear();
+                    }
+                    using (command = new SqlCommand(fiveStarQuery, connection))
+                    {
+                        command.Parameters.Add(param);
+                        connection.Open();
+                        fiveStarReviews = (int)command.ExecuteScalar();
+                        connection.Close();
+                        command.Parameters.Clear();
+                    }
+                    using (command = new SqlCommand(totalReviewsQuery, connection))
+                    {
+                        command.Parameters.Add(param);
+                        connection.Open();
+                        totalReviews = (int)command.ExecuteScalar();
+                        connection.Close();
+                        command.Parameters.Clear();
+                    }
+
+                    if (totalReviews > 0)
+                    {
+                        averageRating = (decimal)(5 * fiveStarReviews + 4 * fourStarReviews + 3 * threeStarReviews + 2 * twoStarReviews + 1 * oneStarReviews) / totalReviews;
+                    }
+                    else
+                    {
+                        averageRating = 0;
+                    }
+                    viewModel.Add(new Professional_Roles_ViewModel()
+                    {
+                        UserId = user.UserId,
+                        Username = user.Username,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        City = user.City,
+                        State = user.State,
+                        Profession = user.Profession,
+                        Email = user.Email,
+                        Rating = averageRating
+                    });
+                }
+            }
+
+            /*var professionals = (from user in _dbcontext.Users
                                  join r in _dbcontext.UserRoles on user.Id equals r.UserId
                                  where r.RoleId == "3"                                 
                                  select new
@@ -221,7 +324,9 @@ namespace SE1_Project.Controllers
                                      LastName = user.LastName,
                                      City = user.City,
                                      State = user.State,
-                                     Profession = user.Profession
+                                     Profession = user.Profession,
+                                     Email = user.Email
+                            
 
                                  }).ToList().Select(p => new Professional_Roles_ViewModel()
                                  {
@@ -231,14 +336,199 @@ namespace SE1_Project.Controllers
                                      LastName = p.LastName,
                                      City = p.City,
                                      State = p.State,
-                                     Profession = p.Profession
-                                 });
-            return View(professionals);
+                                     Profession = p.Profession,
+                                     Email = p.Email
+
+                                 });*/
+            return View(viewModel.ToList());
+            //return View(professionals);
         }
 
-        /*public ActionResult getSpecificUserDetails(string email)
+        public ActionResult getSpecificUserDetails(string id, string uId)
         {
-            var specificProfessional = (from user in )
-        }*/
+            List<Review> reviews = new List<Review>();
+            string queryString = "SELECT reviewId, reviewText, reviewerName, rating, professionalEmail FROM dbo.UserReviews WHERE professionalEmail=@id";
+            using (SqlConnection connection = new SqlConnection("Server=tcp:se1-ratemyprofessional.database.windows.net,1433;Initial Catalog=Identity;Persist Security Info=False;User ID=rmpadmin;Password=TeamOne1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+            {
+                SqlParameter param = new SqlParameter();
+                param.ParameterName = "@id";
+                param.Value = uId;
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(param);
+                connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while(reader.Read())
+                    {
+                        reviews.Add(new Review() { ID = (int)reader[0], reviewText = reader[1].ToString(), reviewerName = reader[2].ToString(), rating = (int)reader[3], professionalId = reader[4].ToString() });
+                    }
+                }
+                connection.Close();
+            }
+
+            string oneStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 1 AND professionalEmail=@id";
+            int oneStarQueries;
+            using (SqlConnection connection = new SqlConnection("Server=tcp:se1-ratemyprofessional.database.windows.net,1433;Initial Catalog=Identity;Persist Security Info=False;User ID=rmpadmin;Password=TeamOne1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+            {
+                SqlParameter param = new SqlParameter();
+                param.ParameterName = "@id";
+                param.Value = uId;
+                using (SqlCommand command = new SqlCommand(oneStarQuery, connection))
+                {
+                    command.Parameters.Add(param);
+                    connection.Open();
+                    oneStarQueries = (int)command.ExecuteScalar();
+                }
+                connection.Close();
+            }
+
+            string twoStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 2 AND professionalEmail=@id";
+            int twoStarQueries;
+            using (SqlConnection connection = new SqlConnection("Server=tcp:se1-ratemyprofessional.database.windows.net,1433;Initial Catalog=Identity;Persist Security Info=False;User ID=rmpadmin;Password=TeamOne1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+            {
+                SqlParameter param = new SqlParameter();
+                param.ParameterName = "@id";
+                param.Value = uId;
+                using (SqlCommand command = new SqlCommand(twoStarQuery, connection))
+                {
+                    command.Parameters.Add(param);
+                    connection.Open();
+                    twoStarQueries = (int)command.ExecuteScalar();
+                }
+                connection.Close();
+            }
+
+            string threeStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 3 AND professionalEmail=@id";
+            int threeStarQueries;
+            using (SqlConnection connection = new SqlConnection("Server=tcp:se1-ratemyprofessional.database.windows.net,1433;Initial Catalog=Identity;Persist Security Info=False;User ID=rmpadmin;Password=TeamOne1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+            {
+                SqlParameter param = new SqlParameter();
+                param.ParameterName = "@id";
+                param.Value = uId;
+                using (SqlCommand command = new SqlCommand(threeStarQuery, connection))
+                {
+                    command.Parameters.Add(param);
+                    connection.Open();
+                    threeStarQueries = (int)command.ExecuteScalar();
+                }
+                connection.Close();
+            }
+
+            string fourStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 4 AND professionalEmail=@id";
+            int fourStarQueries;
+            using (SqlConnection connection = new SqlConnection("Server=tcp:se1-ratemyprofessional.database.windows.net,1433;Initial Catalog=Identity;Persist Security Info=False;User ID=rmpadmin;Password=TeamOne1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+            {
+                SqlParameter param = new SqlParameter();
+                param.ParameterName = "@id";
+                param.Value = uId;
+                using (SqlCommand command = new SqlCommand(fourStarQuery, connection))
+                {
+                    command.Parameters.Add(param);
+                    connection.Open();
+                    fourStarQueries = (int)command.ExecuteScalar();
+                }
+                connection.Close();
+            }
+
+            string fiveStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 5 AND professionalEmail=@id";
+            int fiveStarQueries;
+            using (SqlConnection connection = new SqlConnection("Server=tcp:se1-ratemyprofessional.database.windows.net,1433;Initial Catalog=Identity;Persist Security Info=False;User ID=rmpadmin;Password=TeamOne1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+            {
+                SqlParameter param = new SqlParameter();
+                param.ParameterName = "@id";
+                param.Value = uId;
+                using (SqlCommand command = new SqlCommand(fiveStarQuery, connection))
+                {
+                    command.Parameters.Add(param);
+                    connection.Open();
+                    fiveStarQueries = (int)command.ExecuteScalar();
+                }
+                connection.Close();
+            }
+
+            string totalRating = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE professionalEmail=@id";
+            int totalQueries;
+            using (SqlConnection connection = new SqlConnection("Server=tcp:se1-ratemyprofessional.database.windows.net,1433;Initial Catalog=Identity;Persist Security Info=False;User ID=rmpadmin;Password=TeamOne1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+            {
+                SqlParameter param = new SqlParameter();
+                param.ParameterName = "@id";
+                param.Value = uId;
+                using (SqlCommand command = new SqlCommand(totalRating, connection))
+                {
+                    command.Parameters.Add(param);
+                    connection.Open();
+                    totalQueries = (int)command.ExecuteScalar();
+                }
+                connection.Close();
+            }
+
+            decimal averageRating = 0;
+
+            if (totalQueries > 0)
+            {
+                averageRating = (decimal)(5 * fiveStarQueries + 4 * fourStarQueries + 3 * threeStarQueries + 2 * twoStarQueries + 1 * oneStarQueries) / totalQueries;
+            }
+            
+
+            var pro = _dbcontext.Users.Where(p => p.Email == id).FirstOrDefault();
+            if(pro == null)
+            {
+                return new NotFoundResult();
+            }
+            Professional_Details_ViewModel vm = new Professional_Details_ViewModel()
+            {
+                Email = pro.Email,
+                FirstName = pro.FirstName,
+                LastName = pro.LastName,
+                Address = pro.Address,
+                City = pro.City,
+                State = pro.State,
+                Profession = pro.Profession,
+                Rate = pro.Rate,
+                Company = pro.Company,
+                Reviews = reviews,
+                Rating = averageRating
+            };
+            ViewBag.vm = vm;
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult addReview(string reviewer, string review, int rating, string email)
+        {
+            string insertQuery = "INSERT INTO dbo.UserReviews(reviewerName,reviewText,rating,professionalEmail) VALUES(@reviewer,@review,@rating,@email)";
+            using (SqlConnection connection = new SqlConnection("Server=tcp:se1-ratemyprofessional.database.windows.net,1433;Initial Catalog=Identity;Persist Security Info=False;User ID=rmpadmin;Password=TeamOne1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+            {
+                SqlParameter param1 = new SqlParameter();
+                SqlParameter param2 = new SqlParameter();
+                SqlParameter param3 = new SqlParameter();
+                SqlParameter param4 = new SqlParameter();
+
+                param1.ParameterName = "@reviewer";
+                param2.ParameterName = "@review";
+                param3.ParameterName = "@rating";
+                param4.ParameterName = "@email";
+
+                param1.Value = reviewer;
+                param2.Value = review;
+                param3.Value = rating;
+                param4.Value = email;
+
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(insertQuery, connection);
+
+                command.Parameters.Add(param1);
+                command.Parameters.Add(param2);
+                command.Parameters.Add(param3);
+                command.Parameters.Add(param4);
+
+                command.ExecuteNonQuery();
+
+                connection.Close();
+             
+            }
+            return View("Professional_Roles");
+        }
     }
 }
