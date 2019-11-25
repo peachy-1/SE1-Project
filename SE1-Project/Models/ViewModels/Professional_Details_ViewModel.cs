@@ -7,6 +7,7 @@ namespace SE1_Project.Models.ViewModels
 {
     public class Professional_Details_ViewModel
     {
+        public string professionalId { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -18,5 +19,10 @@ namespace SE1_Project.Models.ViewModels
         public string Company { get; set; }
         public decimal Rating { get; set; }
         public List<Review> Reviews { get; set; }
+
+        public string review { get; set; }
+        public string reviewer { get; set; }
+        public decimal rating { get; set; }
+        public string email { get; set; }
     }
 }
