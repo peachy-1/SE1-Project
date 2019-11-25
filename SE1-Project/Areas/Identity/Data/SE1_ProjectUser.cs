@@ -25,5 +25,6 @@ namespace SE1_Project.Areas.Identity.Data
         public string Rate { get; set; }
         [PersonalData]
         public string Company { get; set; }
+        public decimal avgRating { get; set; }
     }
 }

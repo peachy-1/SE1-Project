@@ -8,7 +8,11 @@ namespace SE1_Project.Migrations.SE1_P
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
+            migrationBuilder.AddColumn<decimal>(
+                name: "avgRating",
+                table: "AspNetUsers"
+                );
+            /*migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -151,7 +155,7 @@ namespace SE1_Project.Migrations.SE1_P
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
+                });*/
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
