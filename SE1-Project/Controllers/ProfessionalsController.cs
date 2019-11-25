@@ -36,11 +36,11 @@ namespace SE1_Project.Controllers
 
             var professionals = from p in _context.Professional
                                 select p;
-            
+
 
             if (!String.IsNullOrEmpty(nameString))
             {
-                professionals = professionals.Where(s => s.fName.Contains(nameString) || s.lName.Contains(nameString) 
+                professionals = professionals.Where(s => s.fName.Contains(nameString) || s.lName.Contains(nameString)
                 || (nameString.Contains(s.fName) && nameString.Contains(s.lName)));
             }
 
@@ -61,7 +61,7 @@ namespace SE1_Project.Controllers
                 professionals = professionals.Where(x => x.profession == professionalprofession);
             }
 
-            
+
 
             var professionalProfessionVM = new ProfessionalProfessionViewModel
             {
@@ -199,8 +199,11 @@ namespace SE1_Project.Controllers
         }
 
         [HttpGet]
-        public ActionResult Professional_Roles()
+        public ActionResult Professional_Roles(string nameString, string cityString, string stateString, string professionalProfession, decimal rating= 0)
         {
+            //List<Professional> professionals = new List<Professional>();
+            //Professional professional;
+            
             var prof = (from user in _dbcontext.Users
                         join r in _dbcontext.UserRoles on user.Id equals r.UserId
                         where r.RoleId == "3"
@@ -214,16 +217,23 @@ namespace SE1_Project.Controllers
                             State = user.State,
                             Profession = user.Profession,
                             Email = user.Email
-                        }).ToList();
 
-            List<Professional_Roles_ViewModel> viewModel = new List<Professional_Roles_ViewModel>();
+                        }).ToList();
+            foreach(var user in prof)
+            {
+                checkAverageRating(user.UserId);
+            }
+            //prof = prof.Where(r => r.a)
+                //professionals = professionals.Where(r => r.averageRating >= rating);
+
+            /*List<Professional_Roles_ViewModel> viewModel = new List<Professional_Roles_ViewModel>();
             string oneStarQuery, twoStarQuery, threeStarQuery, fourStarQuery, fiveStarQuery, totalReviewsQuery;
             int oneStarReviews, twoStarReviews, threeStarReviews, fourStarReviews, fiveStarReviews, totalReviews;
             decimal averageRating;
             SqlConnection connection;
             SqlParameter param = new SqlParameter();
             SqlCommand command;
-            foreach(var user in prof)
+            foreach (var user in prof)
             {
                 oneStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 1 AND professionalEmail=@id";
 
@@ -311,9 +321,9 @@ namespace SE1_Project.Controllers
                         Rating = averageRating
                     });
                 }
-            }
+            }*/
 
-            /*var professionals = (from user in _dbcontext.Users
+            var professionals = (from user in _dbcontext.Users
                                  join r in _dbcontext.UserRoles on user.Id equals r.UserId
                                  where r.RoleId == "3"                                 
                                  select new
@@ -325,23 +335,62 @@ namespace SE1_Project.Controllers
                                      City = user.City,
                                      State = user.State,
                                      Profession = user.Profession,
-                                     Email = user.Email
+                                     Email = user.Email,
+                                     Rating = user.avgRating
                             
 
-                                 }).ToList().Select(p => new Professional_Roles_ViewModel()
+                                 }).ToList().Select(vp => new Professional_Roles_ViewModel()
                                  {
-                                     UserId = p.UserId,
-                                     Username = p.Username,
-                                     FirstName = p.FirstName,
-                                     LastName = p.LastName,
-                                     City = p.City,
-                                     State = p.State,
-                                     Profession = p.Profession,
-                                     Email = p.Email
+                                     UserId = vp.UserId,
+                                     Username = vp.Username,
+                                     FirstName = vp.FirstName,
+                                     LastName = vp.LastName,
+                                     City = vp.City,
+                                     State = vp.State,
+                                     Profession = vp.Profession,
+                                     Email = vp.Email,
+                                     Rating = vp.Rating
+                                     
+                                 });
 
-                                 });*/
-            return View(viewModel.ToList());
-            //return View(professionals);
+            //IQueryable<string> p
+            var p = from pro in _dbcontext.Users
+                    join r in _dbcontext.UserRoles on pro.Id equals r.UserId
+                    where r.RoleId == "3"
+                    select pro;
+
+            if (!String.IsNullOrEmpty(nameString))
+            {
+                p = p.Where(s => s.FirstName.Contains(nameString) || s.LastName.Contains(nameString)
+                || (nameString.Contains(s.FirstName) && nameString.Contains(s.LastName)));
+            }
+
+            if (!String.IsNullOrEmpty(cityString))
+            {
+                p = p.Where(s => s.City.Contains(cityString));
+            }
+
+            if (!String.IsNullOrEmpty(stateString))
+            {
+                p = p.Where(s => s.State.Contains(stateString));
+            }
+
+            p = p.Where(r => r.avgRating >= rating);
+
+            if (!string.IsNullOrEmpty(professionalProfession))
+            {
+                p = p.Where(x => x.Profession == professionalProfession);
+            }
+
+            var profRoles = new Professional_Roles_ViewModel
+            {
+                Professionals = p.ToList()
+            };
+
+
+            //return View(viewModel.ToList());
+            //return View(p);
+            return View(profRoles);
         }
 
         public ActionResult getSpecificUserDetails(string id, string uId)
@@ -358,7 +407,7 @@ namespace SE1_Project.Controllers
                 connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    while(reader.Read())
+                    while (reader.Read())
                     {
                         reviews.Add(new Review() { ID = (int)reader[0], reviewText = reader[1].ToString(), reviewerName = reader[2].ToString(), rating = (int)reader[3], professionalId = reader[4].ToString() });
                     }
@@ -468,10 +517,10 @@ namespace SE1_Project.Controllers
             {
                 averageRating = (decimal)(5 * fiveStarQueries + 4 * fourStarQueries + 3 * threeStarQueries + 2 * twoStarQueries + 1 * oneStarQueries) / totalQueries;
             }
-            
+
 
             var pro = _dbcontext.Users.Where(p => p.Email == id).FirstOrDefault();
-            if(pro == null)
+            if (pro == null)
             {
                 return new NotFoundResult();
             }
@@ -526,9 +575,122 @@ namespace SE1_Project.Controllers
                 command.ExecuteNonQuery();
 
                 connection.Close();
-             
+
             }
             return View("Professional_Roles");
+        }
+
+        public void checkAverageRating(string professionalEmail)
+        {
+            string oneStarQuery, twoStarQuery, threeStarQuery, fourStarQuery, fiveStarQuery, totalReviewsQuery;
+            int oneStarReviews, twoStarReviews, threeStarReviews, fourStarReviews, fiveStarReviews, totalReviews;
+            decimal averageRating;
+            SqlConnection connection;
+            SqlParameter param = new SqlParameter();
+            SqlCommand command;
+            oneStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 1 AND professionalEmail=@id";
+
+            twoStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 2 AND professionalEmail=@id";
+
+            threeStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 3 AND professionalEmail=@id";
+
+            fourStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 4 AND professionalEmail=@id";
+
+            fiveStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 5 AND professionalEmail=@id";
+
+            totalReviewsQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE professionalEmail=@id";
+
+            using (connection = new SqlConnection("Server=tcp:se1-ratemyprofessional.database.windows.net,1433;Initial Catalog=Identity;Persist Security Info=False;User ID=rmpadmin;Password=TeamOne1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+            {
+                param.ParameterName = "@id";
+                param.Value = professionalEmail;
+                using (command = new SqlCommand(oneStarQuery, connection))
+                {
+                    command.Parameters.Add(param);
+                    connection.Open();
+                    oneStarReviews = (int)command.ExecuteScalar();
+                    connection.Close();
+                    command.Parameters.Clear();
+                }
+                using (command = new SqlCommand(twoStarQuery, connection))
+                {
+                    command.Parameters.Add(param);
+                    connection.Open();
+                    twoStarReviews = (int)command.ExecuteScalar();
+                    connection.Close();
+                    command.Parameters.Clear();
+                }
+                using (command = new SqlCommand(threeStarQuery, connection))
+                {
+                    command.Parameters.Add(param);
+                    connection.Open();
+                    threeStarReviews = (int)command.ExecuteScalar();
+                    connection.Close();
+                    command.Parameters.Clear();
+                }
+                using (command = new SqlCommand(fourStarQuery, connection))
+                {
+                    command.Parameters.Add(param);
+                    connection.Open();
+                    fourStarReviews = (int)command.ExecuteScalar();
+                    connection.Close();
+                    command.Parameters.Clear();
+                }
+                using (command = new SqlCommand(fiveStarQuery, connection))
+                {
+                    command.Parameters.Add(param);
+                    connection.Open();
+                    fiveStarReviews = (int)command.ExecuteScalar();
+                    connection.Close();
+                    command.Parameters.Clear();
+                }
+                using (command = new SqlCommand(totalReviewsQuery, connection))
+                {
+                    command.Parameters.Add(param);
+                    connection.Open();
+                    totalReviews = (int)command.ExecuteScalar();
+                    connection.Close();
+                    command.Parameters.Clear();
+                }
+
+                if (totalReviews > 0)
+                {
+                    averageRating = (decimal)(5 * fiveStarReviews + 4 * fourStarReviews + 3 * threeStarReviews + 2 * twoStarReviews + 1 * oneStarReviews) / totalReviews;
+                }
+                else
+                {
+                    averageRating = 0;
+                }
+
+                decimal checkRating;
+                string ratingCheck = "SELECT avgRating FROM [dbo].[AspNetUsers] WHERE Id=@id";
+                using (command = new SqlCommand(ratingCheck, connection))
+                {
+                    command.Parameters.Add(param);
+                    connection.Open();
+                    checkRating = (decimal)command.ExecuteScalar();
+                    connection.Close();
+                    command.Parameters.Clear();
+                }
+                if(averageRating != checkRating)
+                {
+                    string setAvgRating = "UPDATE [dbo].[AspNetUsers] SET avgRating=@rating WHERE Id=@id";
+                    SqlParameter ratingParam = new SqlParameter();
+                    ratingParam.ParameterName = "@rating";
+                    ratingParam.Value = averageRating;
+                    using (command = new SqlCommand(setAvgRating, connection))
+                    {
+                        command.Parameters.Add(param);
+                        command.Parameters.Add(ratingParam);
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        connection.Close();
+                    }
+
+                }
+
+            }
+        
         }
     }
 }
