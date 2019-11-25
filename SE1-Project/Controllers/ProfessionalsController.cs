@@ -199,7 +199,7 @@ namespace SE1_Project.Controllers
         }
 
         [HttpGet]
-        public ActionResult Professional_Roles(string nameString, string cityString, string stateString, string professionalProfession, decimal rating= 0)
+        public ActionResult Professional_Roles(string nameString, string cityString, string stateString, string professionString, decimal rating= 0)
         {
             //List<Professional> professionals = new List<Professional>();
             //Professional professional;
@@ -359,6 +359,11 @@ namespace SE1_Project.Controllers
                     where r.RoleId == "3"
                     select pro;
 
+            if (!String.IsNullOrEmpty(professionString))
+            {
+                p = p.Where(x => x.Profession.Contains(professionString));
+            }
+
             if (!String.IsNullOrEmpty(nameString))
             {
                 p = p.Where(s => s.FirstName.Contains(nameString) || s.LastName.Contains(nameString)
@@ -377,10 +382,7 @@ namespace SE1_Project.Controllers
 
             p = p.Where(r => r.avgRating >= rating);
 
-            if (!string.IsNullOrEmpty(professionalProfession))
-            {
-                p = p.Where(x => x.Profession == professionalProfession);
-            }
+            
 
             var profRoles = new Professional_Roles_ViewModel
             {
