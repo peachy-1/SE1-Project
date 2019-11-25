@@ -200,10 +200,7 @@ namespace SE1_Project.Controllers
 
         [HttpGet]
         public ActionResult Professional_Roles(string nameString, string cityString, string stateString, string professionString, decimal rating= 0)
-        {
-            //List<Professional> professionals = new List<Professional>();
-            //Professional professional;
-            
+        {            
             var prof = (from user in _dbcontext.Users
                         join r in _dbcontext.UserRoles on user.Id equals r.UserId
                         where r.RoleId == "3"
@@ -353,7 +350,6 @@ namespace SE1_Project.Controllers
                                      
                                  });
 
-            //IQueryable<string> p
             var p = from pro in _dbcontext.Users
                     join r in _dbcontext.UserRoles on pro.Id equals r.UserId
                     where r.RoleId == "3"
@@ -395,7 +391,7 @@ namespace SE1_Project.Controllers
             return View(profRoles);
         }
 
-        public ActionResult getSpecificUserDetails(string id, string uId)
+        public ActionResult getSpecificUserDetails(string id, string uId, Professional_Details_ViewModel vmOld)
         {
             List<Review> reviews = new List<Review>();
             string queryString = "SELECT reviewId, reviewText, reviewerName, rating, professionalEmail FROM dbo.UserReviews WHERE professionalEmail=@id";
@@ -528,6 +524,7 @@ namespace SE1_Project.Controllers
             }
             Professional_Details_ViewModel vm = new Professional_Details_ViewModel()
             {
+                professionalId = pro.Id,
                 Email = pro.Email,
                 FirstName = pro.FirstName,
                 LastName = pro.LastName,
@@ -545,7 +542,7 @@ namespace SE1_Project.Controllers
         }
 
         [HttpPost]
-        public ActionResult addReview(string reviewer, string review, int rating, string email)
+        public ActionResult getSpecificUserDetails(string reviewer, string review, int rating, string email, Professional_Details_ViewModel vm)
         {
             string insertQuery = "INSERT INTO dbo.UserReviews(reviewerName,reviewText,rating,professionalEmail) VALUES(@reviewer,@review,@rating,@email)";
             using (SqlConnection connection = new SqlConnection("Server=tcp:se1-ratemyprofessional.database.windows.net,1433;Initial Catalog=Identity;Persist Security Info=False;User ID=rmpadmin;Password=TeamOne1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
@@ -579,7 +576,9 @@ namespace SE1_Project.Controllers
                 connection.Close();
 
             }
-            return View("Professional_Roles");
+            //vm.Reviews.Add(new Review { reviewerName = reviewer, reviewText = review, rating = rating });
+            //return View(vm);
+            return RedirectToAction("Professional_Roles");
         }
 
         public void checkAverageRating(string professionalEmail)
