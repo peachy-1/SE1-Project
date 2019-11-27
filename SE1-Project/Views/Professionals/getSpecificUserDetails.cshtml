@@ -11,6 +11,9 @@
 <p>
     <a asp-action="Professional_Roles">Back to List</a>
 </p>
+<p>
+    <a href="#review">Go to Reviews</a>
+</p>
 
 <h1>Professional Information</h1>
 
@@ -47,12 +50,14 @@
 
 <hr style="border-color:white;">
 <hr style="border-color:white;">
+<a id="review"></a>
 <h4>Reviews for @Html.DisplayFor(i => i.FirstName) @Html.DisplayFor(i => i.LastName)</h4>
 
 @{
     Review newReview = new Review();
 }
 @*Put submission of reviews here, above current reviews*@
+
 @if (ViewContext.HttpContext.User.IsInRole("Customer"))
 {
     <form asp-controller="Professionals" asp-action="getSpecificUserDetails" method="post" id="add">
