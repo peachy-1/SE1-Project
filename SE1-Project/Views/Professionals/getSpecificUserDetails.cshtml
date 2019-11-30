@@ -9,10 +9,10 @@
 }
 
 <p>
-    <a asp-action="Professional_Roles">Back to List</a>
+    <a class="btn btn-primary" asp-action="Professional_Roles">Back to List</a>
 </p>
 <p>
-    <a href="#review">Go to Reviews</a>
+    <a class="btn btn-secondary" href="#review">Go to Reviews</a>
 </p>
 
 <h1>Professional Information</h1>
@@ -83,10 +83,13 @@
 @{ int iter = 0;}
 @foreach (var review in Model.Reviews)
 {
-    <p>@review.reviewerName</p>
-    <p>@review.reviewText</p>
-    <p>@review.rating</p>
-    <hr style="border-color:white;">
+    <div style="border-radius:25px; border-color:white; background:grey; padding:30px; width:600px">
+        <p><h3>@review.reviewerName</h3></p>
+        <p>@review.reviewText</p>
+        <p>@review.rating</p>
+    </div>
+    <br />
+    @*<hr style="border-color:white;">*@
     iter++;
 }
 
