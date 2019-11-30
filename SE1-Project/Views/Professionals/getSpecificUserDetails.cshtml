@@ -68,7 +68,7 @@
             Review Text: <textarea asp-for="review"></textarea>
         </p>
         <p>
-            Rating: <input type="number" asp-for="rating" />
+            Rating: <input type="number" max="5" min="1" value="3" asp-for="rating" />
         </p>
         <p>
             <input type="hidden" asp-for="email"  value="@Model.professionalId"/>
