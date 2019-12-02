@@ -64,18 +64,21 @@
 @if (ViewContext.HttpContext.User.IsInRole("Customer"))
 {
     <form asp-controller="Professionals" asp-action="getSpecificUserDetails" method="post" id="add">
-        <p>
-            Reviewer Name: <input type="text" asp-for="reviewer" />
-        </p>
-        <p>
-            Review Text: <textarea asp-for="review"></textarea>
-        </p>
-        <p>
-            Rating: <input type="number" max="5" min="1" value="3" asp-for="rating" />
-        </p>
-        <p>
-            <input type="hidden" asp-for="email" value="@Model.professionalId" />
-        </p>
+        <table>
+            <tr>
+                <td>Reviewer Name: </td>
+                <td><input type="text" asp-for="reviewer" /></td>
+            </tr>
+            <tr>
+                <td>Rating: </td>
+                <td><input type="number" max="5" min="1" value="3" asp-for="rating" /></td>
+            </tr>
+            <tr>
+                <td>Review Text: </td>
+                <td><textarea asp-for="review"></textarea></td>
+            </tr>
+        </table>
+        
         <p>
             <input type="submit" value="Submit Review" />
         </p>
