@@ -61,8 +61,6 @@ namespace SE1_Project.Controllers
                 professionals = professionals.Where(x => x.profession == professionalprofession);
             }
 
-
-
             var professionalProfessionVM = new ProfessionalProfessionViewModel
             {
                 Professions = new SelectList(await professionQuery.Distinct().ToListAsync()),
@@ -72,6 +70,7 @@ namespace SE1_Project.Controllers
             //return View(await professionals.ToListAsync());
             //return View(await _context.Professional.ToListAsync());
         }
+
 
         // GET: Professionals/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -199,7 +198,7 @@ namespace SE1_Project.Controllers
         }
 
         [HttpGet]
-        public ActionResult Professional_Roles(string nameString, string cityString, string stateString, string professionString, decimal rating= 0)
+        public ActionResult Professional_Roles(string nameString, string cityString, string stateString, string professionString, string sort, decimal rating= 0)
         {            
             var prof = (from user in _dbcontext.Users
                         join r in _dbcontext.UserRoles on user.Id equals r.UserId
@@ -220,105 +219,7 @@ namespace SE1_Project.Controllers
             {
                 checkAverageRating(user.UserId);
             }
-            //prof = prof.Where(r => r.a)
-                //professionals = professionals.Where(r => r.averageRating >= rating);
-
-            /*List<Professional_Roles_ViewModel> viewModel = new List<Professional_Roles_ViewModel>();
-            string oneStarQuery, twoStarQuery, threeStarQuery, fourStarQuery, fiveStarQuery, totalReviewsQuery;
-            int oneStarReviews, twoStarReviews, threeStarReviews, fourStarReviews, fiveStarReviews, totalReviews;
-            decimal averageRating;
-            SqlConnection connection;
-            SqlParameter param = new SqlParameter();
-            SqlCommand command;
-            foreach (var user in prof)
-            {
-                oneStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 1 AND professionalEmail=@id";
-
-                twoStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 2 AND professionalEmail=@id";
-
-                threeStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 3 AND professionalEmail=@id";
-
-                fourStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 4 AND professionalEmail=@id";
-
-                fiveStarQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE rating = 5 AND professionalEmail=@id";
-
-                totalReviewsQuery = "SELECT COUNT(*) FROM [dbo].[UserReviews] WHERE professionalEmail=@id";
-
-                using (connection = new SqlConnection("Server=tcp:se1-ratemyprofessional.database.windows.net,1433;Initial Catalog=Identity;Persist Security Info=False;User ID=rmpadmin;Password=TeamOne1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
-                {
-                    param.ParameterName = "@id";
-                    param.Value = user.UserId;
-                    using (command = new SqlCommand(oneStarQuery, connection))
-                    {
-                        command.Parameters.Add(param);
-                        connection.Open();
-                        oneStarReviews = (int)command.ExecuteScalar();
-                        connection.Close();
-                        command.Parameters.Clear();
-                    }
-                    using (command = new SqlCommand(twoStarQuery, connection))
-                    {
-                        command.Parameters.Add(param);
-                        connection.Open();
-                        twoStarReviews = (int)command.ExecuteScalar();
-                        connection.Close();
-                        command.Parameters.Clear();
-                    }
-                    using (command = new SqlCommand(threeStarQuery, connection))
-                    {
-                        command.Parameters.Add(param);
-                        connection.Open();
-                        threeStarReviews = (int)command.ExecuteScalar();
-                        connection.Close();
-                        command.Parameters.Clear();
-                    }
-                    using (command = new SqlCommand(fourStarQuery, connection))
-                    {
-                        command.Parameters.Add(param);
-                        connection.Open();
-                        fourStarReviews = (int)command.ExecuteScalar();
-                        connection.Close();
-                        command.Parameters.Clear();
-                    }
-                    using (command = new SqlCommand(fiveStarQuery, connection))
-                    {
-                        command.Parameters.Add(param);
-                        connection.Open();
-                        fiveStarReviews = (int)command.ExecuteScalar();
-                        connection.Close();
-                        command.Parameters.Clear();
-                    }
-                    using (command = new SqlCommand(totalReviewsQuery, connection))
-                    {
-                        command.Parameters.Add(param);
-                        connection.Open();
-                        totalReviews = (int)command.ExecuteScalar();
-                        connection.Close();
-                        command.Parameters.Clear();
-                    }
-
-                    if (totalReviews > 0)
-                    {
-                        averageRating = (decimal)(5 * fiveStarReviews + 4 * fourStarReviews + 3 * threeStarReviews + 2 * twoStarReviews + 1 * oneStarReviews) / totalReviews;
-                    }
-                    else
-                    {
-                        averageRating = 0;
-                    }
-                    viewModel.Add(new Professional_Roles_ViewModel()
-                    {
-                        UserId = user.UserId,
-                        Username = user.Username,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        City = user.City,
-                        State = user.State,
-                        Profession = user.Profession,
-                        Email = user.Email,
-                        Rating = averageRating
-                    });
-                }
-            }*/
+            
 
             var professionals = (from user in _dbcontext.Users
                                  join r in _dbcontext.UserRoles on user.Id equals r.UserId
@@ -378,7 +279,12 @@ namespace SE1_Project.Controllers
 
             p = p.Where(r => r.avgRating >= rating);
 
-            
+            if (sort == "name")
+                p = p.OrderBy(t => t.FirstName).ThenBy(t => t.LastName);
+            if (sort == "rating")
+                p = p.OrderBy(t => t.avgRating);
+            if (sort == "rate")
+                p = p.OrderBy(t => t.Rate);
 
             var profRoles = new Professional_Roles_ViewModel
             {

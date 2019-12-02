@@ -24,6 +24,7 @@ namespace SE1_Project.Models.ViewModels
         public string cityString { get; set; }
         public string stateString { get; set; }
         public string professionString { get; set; }
+        public string sortBy { get; set; }
         public List<Areas.Identity.Data.SE1_ProjectUser> Professionals { get; set; }
     }
 }

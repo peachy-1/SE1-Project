@@ -10,7 +10,22 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-<form asp-controller="Professionals" asp-action="Index" method="get" id="filter" style="display: inline; float: left; width: 30%; border: 1px solid white; padding-left: 5px">
+@*<style>
+    #filter {
+        display: inline;
+        float: left;
+        width: 15%;
+        border: 1px solid orange;
+        padding-left: 5px;
+    }
+    
+    #pro_table {
+        display: inline;
+        float: right;
+        width: 60%;
+    }
+</style>*@
+<form asp-controller="Professionals" asp-action="Index" method="get" id="filter">
     <p style="padding-top: 10px">
         Name: <input type="text" asp-for="NameString" />
     <p></p>
@@ -86,7 +101,7 @@
     </p>
 </form>
 
-<table class="table" style="display:inline; float: right; width: 65%; margin-left: 3px">
+<table class="table" id="pro_table">
     <thead style="color:white;">
         <tr>
             <th>
