@@ -11,46 +11,49 @@
 <p>
     <a class="btn btn-primary" asp-action="Professional_Roles">Back to List</a>
 </p>
-<p>
-    <a class="btn btn-secondary" href="#review">Go to Reviews</a>
-</p>
+@*<p>
+        <a class="btn btn-secondary" href="#review">Go to Reviews</a>
+    </p>*@
 
 <h1>Professional Information</h1>
 
 
-<h4>@Html.DisplayNameFor(i => i.Email)</h4>
-<p>@Html.DisplayFor(i => i.Email)</p>
 
-<h4>Name</h4>
-<p>@Html.DisplayFor(i => i.FirstName) @Html.DisplayFor(i => i.LastName)</p>
-
-
-@*@Html.TextBoxFor(m => m.FirstName, new { @readonly = "readonly" })*@
-
-<h4>@Html.DisplayNameFor(i => i.Address)</h4>
-<p>@Html.DisplayFor(i => i.Address)</p>
-
-<h4>@Html.DisplayNameFor(i => i.City)</h4>
-<p>@Html.DisplayFor(i => i.City)</p>
-
-<h4>@Html.DisplayNameFor(i => i.State)</h4>
-<p>@Html.DisplayFor(i => i.State)</p>
-
-<h4>@Html.DisplayNameFor(i => i.Profession)</h4>
-<p>@Html.DisplayFor(i => i.Profession)</p>
-
-<h4>Hourly Rate</h4>
-<p>$@Html.DisplayFor(i => i.Rate)</p>
-
-<h4>@Html.DisplayNameFor(i => i.Company)</h4>
-<p>@Html.DisplayFor(i => i.Company)</p>
-
-<h4>Average Rating</h4>
-<p>@Html.DisplayFor(i => i.Rating)</p>
+<table class=" table-striped table-dark table-bordered" id="info">
+    <tr>
+        <td>Name</td>
+        <td> @Html.DisplayFor(i => i.FirstName)  @Html.DisplayFor(i => i.LastName)</td>
+    </tr>
+    <tr>
+        <td>Address</td>
+        <td>@Html.DisplayFor(i => i.Address)</td>
+    </tr>
+    <tr>
+        <td>City</td>
+        <td>@Html.DisplayFor(i => i.City),  @Html.DisplayFor(i => i.State)</td>
+    </tr>
+    <tr>
+        <td>Profession</td>
+        <td>@Html.DisplayFor(i => i.Profession)</td>
+    </tr>
+    <tr>
+        <td>Rate</td>
+        <td>@Html.DisplayFor(i => i.Rate)</td>
+    </tr>
+    <tr>
+        <td>Company</td>
+        <td>@Html.DisplayFor(i => i.Company)</td>
+    </tr>
+    <tr>
+        <td>Rating</td>
+        <td>@Html.DisplayFor(i => i.Rating)</td>
+    </tr>
+</table>
 
 <hr style="border-color:white;">
 <hr style="border-color:white;">
 <a id="review"></a>
+
 <h4>Reviews for @Html.DisplayFor(i => i.FirstName) @Html.DisplayFor(i => i.LastName)</h4>
 
 @{
@@ -71,26 +74,22 @@
             Rating: <input type="number" max="5" min="1" value="3" asp-for="rating" />
         </p>
         <p>
-            <input type="hidden" asp-for="email"  value="@Model.professionalId"/>
+            <input type="hidden" asp-for="email" value="@Model.professionalId" />
         </p>
         <p>
             <input type="submit" value="Submit Review" />
         </p>
     </form>
-    
-}
 
-@{ int iter = 0;}
+}
 @foreach (var review in Model.Reviews)
 {
-    <div style="border-radius:25px; border-color:white; background:grey; padding:30px; width:600px">
+    <div class="review" style="border-radius:25px; border-color:white; background:grey; padding:30px; width:600px;">
         <p><h3>@review.reviewerName</h3></p>
         <p>@review.reviewText</p>
         <p>@review.rating</p>
     </div>
     <br />
     @*<hr style="border-color:white;">*@
-    iter++;
 }
 
-    Total Reviews: @iter
