@@ -6,156 +6,153 @@
 }
 
 <h1 style="display:inline;">List of Professionals</h1>
-<form asp-action="Professional_Roles" method="get">
+<div class="table-responsive">
+    <form asp-action="Professional_Roles" method="get">
    
-    </p>
-</form>
-<form asp-controller="Professionals" asp-action="Professional_Roles" method="get" id="filter">
-    <table style="color: white;" class="table" id="filter_table">
-        <tr>
-            <td>Sort by: </td>
-            <td>
-                <select asp-for="sortBy" style="max-width: 10em;">
-                    <option value=""></option>
-                    <option value="name">Name</option>
-                    <option value="rating">Rating</option>
-                    <option value="rate">Rate</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Name: </td>
-            <td><input style="width: 100%" type="text" asp-for="nameString" /></td>
-        </tr>
-        <tr>
-            <td>City: </td>
-            <td><input style="width: 100%;" type="text" asp-for="cityString" /></td>
-        </tr>
-        <tr>
-            <td>State: </td>
-            <td>
-                <select asp-for="stateString">
-                    <option value=""></option>
-                    <option value="AL">AL</option>
-                    <option value="AK">AK</option>
-                    <option value="AR">AR</option>
-                    <option value="AZ">AZ</option>
-                    <option value="CA">CA</option>
-                    <option value="CO">CO</option>
-                    <option value="CT">CT</option>
-                    <option value="DC">DC</option>
-                    <option value="DE">DE</option>
-                    <option value="FL">FL</option>
-                    <option value="GA">GA</option>
-                    <option value="HI">HI</option>
-                    <option value="IA">IA</option>
-                    <option value="ID">ID</option>
-                    <option value="IL">IL</option>
-                    <option value="IN">IN</option>
-                    <option value="KS">KS</option>
-                    <option value="KY">KY</option>
-                    <option value="LA">LA</option>
-                    <option value="MA">MA</option>
-                    <option value="MD">MD</option>
-                    <option value="ME">ME</option>
-                    <option value="MI">MI</option>
-                    <option value="MN">MN</option>
-                    <option value="MO">MO</option>
-                    <option value="MS">MS</option>
-                    <option value="MT">MT</option>
-                    <option value="NC">NC</option>
-                    <option value="NE">NE</option>
-                    <option value="NH">NH</option>
-                    <option value="NJ">NJ</option>
-                    <option value="NM">NM</option>
-                    <option value="NV">NV</option>
-                    <option value="NY">NY</option>
-                    <option value="ND">ND</option>
-                    <option value="OH">OH</option>
-                    <option value="OK">OK</option>
-                    <option value="OR">OR</option>
-                    <option value="PA">PA</option>
-                    <option value="RI">RI</option>
-                    <option value="SC">SC</option>
-                    <option value="SD">SD</option>
-                    <option value="TN">TN</option>
-                    <option value="TX">TX</option>
-                    <option value="UT">UT</option>
-                    <option value="VT">VT</option>
-                    <option value="VA">VA</option>
-                    <option value="WA">WA</option>
-                    <option value="WI">WI</option>
-                    <option value="WV">WV</option>
-                    <option value="WY">WY</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Rating: </td>
-            <td>
-                <select asp-for="Rating">
-                    <option></option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Profession: </td>
-            <td>
-                <select style="max-width: 100%;" asp-for="professionString"> 
-                    <option value=""></option>
-                    <option value="Babysitter">Babysitter</option>
-                    <option value="Carpenter">Carpenter</option>
-                    <option value="Cleaner">Cleaner</option>
-                    <option value="Electrician">Electrician</option>
-                    <option value="Financial Advisor">Financial Advisor</option>
-                    <option value="General Contractor">General Contractor</option>
-                    <option value="Lawyer">Lawyer</option>
-                    <option value="Plumber">Plumber</option>
-                    <option value="Repair/Maintenance">Repair/Maintenance</option>
-                    <option value="Tutoring">Tutoring</option>
-                    <option value="Other">Other</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="submit" value="Filter" />
-            </td>
-            <td></td>
-        </tr>
-    </table>
+        </p>
+    </form>
+    <form asp-controller="Professionals" asp-action="Professional_Roles" method="get" id="filter">
+        <table style="color: white;" class="table" id="filter_table">
+            <tr>
+                <td>Sort by: </td>
+                <td>
+                    <select asp-for="sortBy" style="max-width: 10em;">
+                        <option value=""></option>
+                        <option value="name">Name</option>
+                        <option value="rating">Rating</option>
+                        <option value="rate">Rate</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Name: </td>
+                <td><input style="width: 100%" type="text" asp-for="nameString" /></td>
+            </tr>
+            <tr>
+                <td>City: </td>
+                <td><input style="width: 100%;" type="text" asp-for="cityString" /></td>
+            </tr>
+            <tr>
+                <td>State: </td>
+                <td>
+                    <select asp-for="stateString">
+                        <option value=""></option>
+                        <option value="AL">AL</option>
+                        <option value="AK">AK</option>
+                        <option value="AR">AR</option>
+                        <option value="AZ">AZ</option>
+                        <option value="CA">CA</option>
+                        <option value="CO">CO</option>
+                        <option value="CT">CT</option>
+                        <option value="DC">DC</option>
+                        <option value="DE">DE</option>
+                        <option value="FL">FL</option>
+                        <option value="GA">GA</option>
+                        <option value="HI">HI</option>
+                        <option value="IA">IA</option>
+                        <option value="ID">ID</option>
+                        <option value="IL">IL</option>
+                        <option value="IN">IN</option>
+                        <option value="KS">KS</option>
+                        <option value="KY">KY</option>
+                        <option value="LA">LA</option>
+                        <option value="MA">MA</option>
+                        <option value="MD">MD</option>
+                        <option value="ME">ME</option>
+                        <option value="MI">MI</option>
+                        <option value="MN">MN</option>
+                        <option value="MO">MO</option>
+                        <option value="MS">MS</option>
+                        <option value="MT">MT</option>
+                        <option value="NC">NC</option>
+                        <option value="NE">NE</option>
+                        <option value="NH">NH</option>
+                        <option value="NJ">NJ</option>
+                        <option value="NM">NM</option>
+                        <option value="NV">NV</option>
+                        <option value="NY">NY</option>
+                        <option value="ND">ND</option>
+                        <option value="OH">OH</option>
+                        <option value="OK">OK</option>
+                        <option value="OR">OR</option>
+                        <option value="PA">PA</option>
+                        <option value="RI">RI</option>
+                        <option value="SC">SC</option>
+                        <option value="SD">SD</option>
+                        <option value="TN">TN</option>
+                        <option value="TX">TX</option>
+                        <option value="UT">UT</option>
+                        <option value="VT">VT</option>
+                        <option value="VA">VA</option>
+                        <option value="WA">WA</option>
+                        <option value="WI">WI</option>
+                        <option value="WV">WV</option>
+                        <option value="WY">WY</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Rating: </td>
+                <td>
+                    <select asp-for="Rating">
+                        <option></option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Profession: </td>
+                <td>
+                    <select style="max-width: 100%;" asp-for="professionString"> 
+                        <option value=""></option>
+                        <option value="Babysitter">Babysitter</option>
+                        <option value="Carpenter">Carpenter</option>
+                        <option value="Cleaner">Cleaner</option>
+                        <option value="Electrician">Electrician</option>
+                        <option value="Financial Advisor">Financial Advisor</option>
+                        <option value="General Contractor">General Contractor</option>
+                        <option value="Lawyer">Lawyer</option>
+                        <option value="Plumber">Plumber</option>
+                        <option value="Repair/Maintenance">Repair/Maintenance</option>
+                        <option value="Tutoring">Tutoring</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Filter" />
+                </td>
+                <td></td>
+            </tr>
+        </table>
     
-</form>
-
-<table class="table table-hover table-bordered" id="ListOfProfessionals">
-    <thead style="color:white;">
-        <tr>
-            <td><b>Name</b></td>
-            <td><b>City</b></td>
-            <td><b>State</b></td>
-            <td><b>Profession</b></td>
-            <td><b>Email</b></td>
-            <td><b>Rating</b></td>
-            <td></td>
-        </tr>
-    </thead>
-    @foreach (var user in Model.Professionals)
-    {
-        <tr style="color:white;">
-            <td>@user.FirstName @user.LastName</td>
-            <td>@user.City</td>
-            <td>@user.State</td>
-            <td>@user.Profession</td>
-            <td>@user.Email</td>
-            <td>@user.avgRating</td>
-            <td>
-                <a asp-action="getSpecificUserDetails" asp-controller="Professionals" asp-route-id="@user.Email" asp-route-uid="@user.Id">Details</a>
-            </td>
-        </tr>
-    }
-</table>
+    </form>
+    <table class="table table-hover table-bordered table-responsive-lg" id="ListOfProfessionals">
+        <thead style="color:white;">
+            <tr>
+                <td><b>Name</b></td>
+                <td><b>City</b></td>
+                <td><b>State</b></td>
+                <td><b>Profession</b></td>
+                <td><b>Email</b></td>
+                <td><b>Rating</b></td>
+            </tr>
+        </thead>
+        @foreach (var user in Model.Professionals)
+        {
+            <tr style="color:white;">
+                <td><a asp-action="getSpecificUserDetails" asp-controller="Professionals" asp-route-id="@user.Email" asp-route-uid="@user.Id">@user.FirstName @user.LastName</a></td>
+                <td>@user.City</td>
+                <td>@user.State</td>
+                <td>@user.Profession</td>
+                <td>@user.Email</td>
+                <td>@user.avgRating</td>
+            </tr>
+        }
+    </table>
+</div>

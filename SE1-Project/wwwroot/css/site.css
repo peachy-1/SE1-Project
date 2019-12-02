@@ -55,9 +55,19 @@ body {
 }
 
 #ListOfProfessionals {
+    display: inline;
+    overflow: scroll;
     float: right;
     padding-left: 5px;
     width: 65%;
+}
+
+.table-responsive-lg {
+    display: inline;
+}
+.table-responsive {
+    max-height: 300px;
+    display: inline;
 }
 
 #filter_table {
