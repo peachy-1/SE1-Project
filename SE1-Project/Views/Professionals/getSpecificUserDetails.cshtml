@@ -73,9 +73,11 @@
                 <td>Rating: </td>
                 <td><input type="number" max="5" min="1" value="3" asp-for="rating" /></td>
             </tr>
+
             <tr>
                 <td>Review Text: </td>
-                <td><textarea asp-for="review"></textarea></td>
+                <td><textarea asp-for="review"></textarea><input type="hidden" asp-for="email" value="@Model.professionalId" /></td>
+
             </tr>
         </table>
         
